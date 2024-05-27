@@ -1,0 +1,24 @@
+{
+  "name": "electron-pdf-images-extractor",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^30.0.8"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "pdf-lib": "^1.17.1",
+    "pdf-poppler": "^0.2.1",
+    "pdfjs-dist": "^4.2.67",
+    "sharp": "^0.33.4",
+    "uuid": "^9.0.1"
+  }
+}
