@@ -1,7 +1,7 @@
-const { app, BrowserWindow, ipcMain  } = require('electron');
-const convertPDFPagesToImages = require('./modules/convertPDFPagesToImages');
 const path = require('path');
-const { selectFolder } = require('./modules/fileUtils');
+const { app, BrowserWindow, ipcMain  } = require('electron');
+const folderExists = require('./modules/folderUtils');
+const convertPDFPagesToImages = require('./modules/convertPDFPagesToImages');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -18,9 +18,9 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
-  ipcMain.handle('extract-images', async (event, pdfPath) => {
+  ipcMain.handle('extract-images', async (event, pdfPath, outputDir) => {
     try {
-      var result = await convertPDFPagesToImages(pdfPath);
+      var result = await convertPDFPagesToImages(pdfPath, outputDir);
       return { success: true, imagePaths: result };
     } catch (error) {
       return { success: false, error: error.message };
@@ -28,15 +28,14 @@ app.whenReady().then(() => {
   });
 
   // Expose selectFolder function to renderer process
-  ipcMain.handle('select-folder', async (event) => {
+  ipcMain.handle('check-folder-exists', async (event, folderPath) => {
     try {
-      const selectedFolder = await selectFolder();
-      return selectedFolder;
+      const result = await folderExists(folderPath);
+      return { success: true, IsExist: result };
     } catch (error) {
-      console.error(error);
-      return null;
+      return { success: false, error: error.message };
     }
-  });
+  });  
 });
 
 app.on('window-all-closed', () => {

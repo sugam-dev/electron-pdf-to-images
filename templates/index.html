@@ -16,6 +16,12 @@
           <div class="mb-3 row">
             <div class="col-md-4">
               <div class="custom-file-upload">
+                <input class="form-control" type="text" id="folderInput" placeholder="Folder Path" required>
+                <div id="folder-error" class="text-danger"></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="custom-file-upload">
                 <input class="form-control" type="file" id="fileInput" accept=".pdf" required>
                 <div id="file-error" class="text-danger"></div>
               </div>
@@ -25,11 +31,10 @@
             </div>
           </div>
         </form>
-        
-        <hr>
+        <!-- <hr>
         <div class="container image-container">
             <div id="imageContainer" class="row justify-content-center"></div>
-        </div>
+        </div> -->
       </div>
     </div>
       <div class="area">
