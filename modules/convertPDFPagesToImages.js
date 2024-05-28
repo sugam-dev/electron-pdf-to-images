@@ -1,17 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const { PDFDocument } = require('pdf-lib');
-const poppler = require('pdf-poppler');
-const { v4: uuidv4 } = require('uuid');
+const fs = require("fs");
+const path = require("path");
+const { PDFDocument } = require("pdf-lib");
+const poppler = require("pdf-poppler");
+const { v4: uuidv4 } = require("uuid");
 
 async function convertPDFPagesToImages(pdfPath, outputDir) {
   const pdfDoc = await PDFDocument.load(fs.readFileSync(pdfPath));
 
   const pdfName = path.basename(pdfPath, path.extname(pdfPath));
-  console.log('pdfName: ', pdfName);
-  console.log('outputDir: ', outputDir);
   const pdfImageDir = path.join(outputDir, pdfName);
-  console.log('pdfImageDir: ', pdfImageDir);
 
   if (!fs.existsSync(pdfImageDir)) {
     fs.mkdirSync(pdfImageDir, { recursive: true });
@@ -36,7 +33,7 @@ async function convertPDFPagesToImages(pdfPath, outputDir) {
 
 async function renderPDFPageToImage(pdfPath, pageNumber, imagePath) {
   const options = {
-    format: 'jpeg',
+    format: "jpeg",
     out_dir: path.dirname(imagePath),
     out_prefix: path.basename(imagePath, path.extname(imagePath)),
     page: pageNumber,
@@ -45,10 +42,10 @@ async function renderPDFPageToImage(pdfPath, pageNumber, imagePath) {
   try {
     const result = await poppler.convert(pdfPath, options);
     if (!result) {
-      console.log('Image rendered successfully!');
+      console.log(`${imagePath}: ✔️`);
     }
   } catch (error) {
-    console.error('Error rendering PDF page:', error);
+    console.error("Error rendering PDF page:", error);
   }
 }
 

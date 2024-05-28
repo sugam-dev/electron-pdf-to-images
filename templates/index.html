@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title></title>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/animated_layout.css">
+    <meta charset="UTF-8" />
+    <title>📄pdf to images🖼️</title>
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../css/animated_layout.css" />
   </head>
-  <body>   
+  <body>
     <div class="context">
-    <div class="container">
-        <h1>PDF to images! 📄🖼️</h1>
+      <div class="container">
+        <h1>📄pdf to images🖼️</h1>
         <form id="upload-form">
           <div class="mb-3 row">
             <div class="col-md-4">
-              <div class="custom-file-upload">
-                <input class="form-control" type="text" id="folderInput" placeholder="Folder Path" required>
-                <div id="folder-error" class="text-danger"></div>
-              </div>
+              <input
+                class="form-control"
+                type="text"
+                id="folderInput"
+                placeholder="Folder Path"
+                required
+              />
             </div>
             <div class="col-md-4">
-              <div class="custom-file-upload">
-                <input class="form-control" type="file" id="fileInput" accept=".pdf" required>
-                <div id="file-error" class="text-danger"></div>
-              </div>
+              <input
+                class="form-control"
+                type="file"
+                id="fileInput"
+                accept=".pdf"
+                required
+              />
             </div>
             <div class="col-md-2">
               <button type="submit" class="btn btn-primary">Upload</button>
             </div>
           </div>
         </form>
-        <!-- <hr>
-        <div class="container image-container">
-            <div id="imageContainer" class="row justify-content-center"></div>
-        </div> -->
       </div>
     </div>
-      <div class="area">
-        <ul class="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
+    <div class="area">
+      <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     </div>
-      <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-      <script src="../scripts/renderer.js"></script>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+      <div
+        id="toast-container"
+        class="toast-container position-fixed bottom-0 end-0 p-3"
+      ></div>
+    </div>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../scripts/renderer.js"></script>
   </body>
 </html>
