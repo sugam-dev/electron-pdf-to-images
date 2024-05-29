@@ -31,7 +31,7 @@ $form.on("submit", async function (event) {
   try {
     const result = await window.electron.extractImages(filePath, folderPath);
     if (result.success) {
-      showCustonToast(folderPath, "Images extracted successfully!", "success");
+      showCustonToast(folderPath, "Images extracted successfully!", "primary");
     } else {
       showToast("Error:", `${result.error}`, "danger");
     }
@@ -57,24 +57,47 @@ function showToast(title, message, type) {
 }
 
 function showCustonToast(outputDir, message, type) {
-  console.log('outputDir:', outputDir);
-  let toastHTML = `
-      <div class="toast text-bg-${type}" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">
-          ${message}.
-          <div class="mt-2 pt-2 border-top">
-          <button type="button" class="btn btn-light btn-sm" onclick="openFolder('${outputDir}')">Open Folder</button>
-            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
-          </div>
-        </div>
-      </div>
-    `;
-  $("#toast-container").append(toastHTML);
+  // Create the toast container
+  var toastContainer = $("<div>")
+    .addClass("toast text-bg-" + type)
+    .attr("role", "alert")
+    .attr("aria-live", "assertive")
+    .attr("aria-atomic", "true");
+
+  // Create the toast body
+  var toastBody = $("<div>").addClass("toast-body").text(message);
+
+  // Create the buttons container
+  var buttonsContainer = $("<div>").addClass("mt-2 pt-2 btn-group");
+
+  // Create the "Open Folder" button
+  var openFolderButton = $("<button>")
+    .addClass("btn btn-light btn-sm")
+    .text("Open Folder")
+    .on("click", function () {
+      openFolder(outputDir);
+    });
+
+  // Create the "Close" button
+  var closeButton = $("<button>")
+    .addClass("btn btn-secondary btn-sm")
+    .attr("data-bs-dismiss", "toast")
+    .text("Close");
+
+  // Append buttons to the buttons container
+  buttonsContainer.append(openFolderButton, closeButton);
+
+  // Append buttons container to toast body
+  toastBody.append(buttonsContainer);
+
+  // Append toast body to toast container
+  toastContainer.append(toastBody);
+
+  $("#toast-container").append(toastContainer);
   let toast = new bootstrap.Toast($("#toast-container .toast").last()[0]);
   toast.show();
 }
 
 async function openFolder(outputDir) {
-  console.log('outputDir in openFolder:', outputDir);
   await window.electron.openFolderInOS(outputDir);
 }

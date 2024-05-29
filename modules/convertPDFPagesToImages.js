@@ -40,10 +40,7 @@ async function renderPDFPageToImage(pdfPath, pageNumber, imagePath) {
   };
 
   try {
-    const result = await poppler.convert(pdfPath, options);
-    if (!result) {
-      console.log(`${imagePath}: ✔️`);
-    }
+    await poppler.convert(pdfPath, options);
   } catch (error) {
     console.error("Error rendering PDF page:", error);
   }

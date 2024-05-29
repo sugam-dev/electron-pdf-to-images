@@ -3,9 +3,6 @@ const path = require('path');
 
 function openFolderInOS(outputDir) {
   const folderPath = outputDir;
-
-  console.log('folderPath: ', folderPath);
-
   let command = '';
 
   // Detect OS and set appropriate command
@@ -26,7 +23,6 @@ function openFolderInOS(outputDir) {
       console.error(`Error opening folder: ${err}`);
       return;
     }
-    console.log(`Folder opened: ${folderPath}`);
   });
 }
 

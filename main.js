@@ -1,26 +1,43 @@
 const path = require("path");
 const { app, BrowserWindow, ipcMain, nativeImage } = require("electron");
+const {
+  setupTitlebar,
+  attachTitlebarToWindow,
+} = require("custom-electron-titlebar/main");
 const folderExists = require("./modules/folderUtils");
 const convertPDFPagesToImages = require("./modules/convertPDFPagesToImages");
 const openFolderInOS = require("./modules/openFolder");
 
-function createWindow() {
+// setup the titlebar main process
+setupTitlebar();
 
-	let image = nativeImage.createFromPath(path.join(__dirname, 'images/logo.png'));
+function createWindow() {
+  let image = nativeImage.createFromPath(
+    path.join(__dirname, "images/logo.png")
+  );
 
   const mainWindow = new BrowserWindow({
-		width: 1100,
-		height: 640,
+    width: 1100,
+    height: 640,
     minWidth: 800,
     minHeight: 600,
-		icon: image,
+    titleBarStyle: "hidden",
+    titleBarOverlay: {
+      color: "#4e54c8",
+      symbolColor: "#FFFFFF",
+    },
+    icon: image,
     webPreferences: {
       preload: path.join(__dirname, "modules/preload.js"),
-      contentSecurityPolicy: "default-src 'self'; script-src 'self'; img-src 'self'", // Set content security policy
+      contentSecurityPolicy:
+        "default-src 'self'; script-src 'self'; img-src 'self'", // Set content security policy
     },
   });
 
   mainWindow.loadFile("templates/index.html");
+
+  // attach fullScreen(f11 and not 'maximized') && focus listeners
+  attachTitlebarToWindow(mainWindow);
 }
 
 app.whenReady().then(() => {
@@ -45,7 +62,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("open-folder-InOS", async (event, outputDir) => {
-      await openFolderInOS(outputDir);
+    await openFolderInOS(outputDir);
   });
 });
 
